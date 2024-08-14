@@ -1,18 +1,49 @@
 import React, { useState } from "react";
-import * as S from "./styles";
+import { useNavigate } from "react-router-dom";
+import * as S from "./styles.ts";
+import StepOne from "./StepOne";
+import StepTwo from "./StepTwo";
+import { CreateInstitution } from "../../server/api.ts";
+import {
+  InstituicaoEstrangeiraBody,
+  InstituicaoBrasileiraBody,
+} from "../../model/instituition.ts";
 import { Footprints } from "lucide-react";
-import StepOne from "./StepOne/index.tsx";
-import StepTwo from "./StepTwo/index.tsx";
 
 const Register: React.FC = () => {
   const [step, setStep] = useState<number>(1);
+  const [formData, setFormData] = useState<any>({});
+
+  const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    navigate("/");
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await CreateInstitution(formData);
+      if (response.ok) {
+        console.log("Instituição criada com sucesso!");
+        navigate("/");
+      } else {
+        console.error("Erro ao criar instituição:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Erro ao criar instituição:", error);
+    }
+  };
 
   const renderStepContent = (step: number): JSX.Element | null => {
     switch (step) {
       case 1:
-        return <StepOne />;
+        return (
+          <StepOne data={formData} onChange={(data) => setFormData(data)} />
+        );
       case 2:
-        return <StepTwo />;
+        return (
+          <StepTwo data={formData} onChange={(data) => setFormData(data)} />
+        );
       default:
         return null;
     }
@@ -20,9 +51,7 @@ const Register: React.FC = () => {
 
   return (
     <S.Container>
-      <S.BackButton onClick={() => alert("Voltar clicado!")}>
-        ← Voltar
-      </S.BackButton>
+      <S.BackButton onClick={handleBackClick}>← Voltar</S.BackButton>
       <S.HeaderForm>
         <S.Title>Instituição</S.Title>
         <S.RowItem>
@@ -45,7 +74,15 @@ const Register: React.FC = () => {
         >
           Anterior
         </S.BackStepButton>
-        <S.NextStepButton onClick={() => step !== 2 && setStep(step + 1)}>
+        <S.NextStepButton
+          onClick={() => {
+            if (step === 2) {
+              handleSubmit();
+            } else {
+              setStep(step + 1);
+            }
+          }}
+        >
           {step === 2 ? "Finalizar" : "Próximo"}
         </S.NextStepButton>
       </S.ButtonContainer>
