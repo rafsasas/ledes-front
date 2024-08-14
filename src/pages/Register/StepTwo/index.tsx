@@ -1,52 +1,127 @@
-import React, { useState } from 'react';
-import { JsonForms } from '@jsonforms/react';
-import { materialRenderers, materialCells } from '@jsonforms/material-renderers';
-import * as S from './styles.ts';
+import React, { useState, useEffect } from "react";
+import { JsonForms } from "@jsonforms/react";
+import {
+  materialRenderers,
+  materialCells,
+} from "@jsonforms/material-renderers";
+import * as S from "./styles.ts";
+
+interface StepTwoProps {
+  data: any;
+  onChange: (data: any) => void;
+}
 
 const schema = {
-  type: 'object',
+  type: "object",
   properties: {
-    cep: {type: 'string', title: 'CNJP'},
-    state: {type: 'string', title: 'Estado'},
-    logradouro: {type: 'string', title: 'Logradouro'},
-    number: {type: 'string', title: 'Número'},
-    country: {type: 'string', title: 'País'},
-    city: {type: 'string', title: 'Município'},
-    neighborhood: {type: 'string', title: 'Bairro'},
-    complement: {type: 'string', title: 'Complemento'}
+    cep: { type: "string", title: "CEP" },
+    estado: { type: "string", title: "Estado" },
+    logradouro: { type: "string", title: "Logradouro" },
+    numero: { type: "number", title: "Número" },
+    pais: {
+      type: "string",
+      title: "País",
+      enum: [
+        "Afeganistão",
+        "África do Sul",
+        "Albânia",
+        "Algéria",
+        "Alemanha",
+        "Angola",
+        "Arábia Saudita",
+        "Argentina",
+        "Austrália",
+        "Áustria",
+        "Bangladesh",
+        "Bélgica",
+        "Brasil",
+        "Canadá",
+        "Chile",
+        "China",
+        "Colômbia",
+        "Coreia do Sul",
+        "Croácia",
+        "Cuba",
+        "Dinamarca",
+        "Egito",
+        "Emirados Árabes Unidos",
+        "Espanha",
+        "Estados Unidos",
+        "Etiópia",
+        "Filipinas",
+        "Finlândia",
+        "França",
+        "Gana",
+        "Grécia",
+        "Hungria",
+        "Índia",
+        "Indonésia",
+        "Irã",
+        "Irlanda",
+        "Israel",
+        "Itália",
+        "Japão",
+        "Malásia",
+        "Marrocos",
+        "México",
+        "Moçambique",
+        "Noruega",
+        "Nova Zelândia",
+        "Países Baixos",
+        "Paquistão",
+        "Peru",
+        "Polônia",
+        "Portugal",
+        "Qatar",
+        "Reino Unido",
+        "República Tcheca",
+        "Romênia",
+        "Rússia",
+        "Singapura",
+        "Sudão",
+        "Suécia",
+        "Suíça",
+        "Tailândia",
+        "Turquia",
+        "Ucrânia",
+        "Venezuela",
+        "Vietnã",
+        "Zimbábue",
+      ],
+    },
+    municipio: { type: "string", title: "Município" },
+    bairro: { type: "string", title: "Bairro" },
+    complemento: { type: "string", title: "Complemento" },
   },
-  required: ['cep' , 'state', 'logradouro', 'number', 'country', 'city', 'neighborhood', 'complement']
 };
 
 const uischema = {
-  type: 'VerticalLayout',
+  type: "VerticalLayout",
   elements: [
-    { type: 'Control', scope: '#/properties/cep'},
-    { type: 'Control', scope: '#/properties/state' },
-    { type: 'Control', scope: '#/properties/logradouro' },
-    { type: 'Control', scope: '#/properties/number' },
-    { type: 'Control', scope: '#/properties/country' },
-    { type: 'Control', scope: '#/properties/city' },
-    { type: 'Control', scope: '#/properties/neighborhood' },
-    { type: 'Control', scope: '#/properties/complement' },
-  ]
+    { type: "Control", scope: "#/properties/cep" },
+    { type: "Control", scope: "#/properties/estado" },
+    { type: "Control", scope: "#/properties/logradouro" },
+    { type: "Control", scope: "#/properties/numero" },
+    { type: "Control", scope: "#/properties/pais" },
+    { type: "Control", scope: "#/properties/municipio" },
+    { type: "Control", scope: "#/properties/bairro" },
+    { type: "Control", scope: "#/properties/complemento" },
+  ],
 };
 
-const StepTwo = () => {
-  const [data, setData] = useState({});
-
+const StepTwo: React.FC<StepTwoProps> = ({ data, onChange }) => {
   return (
     <S.Container>
-        <S.ContainerForm>
-            <JsonForms
-              schema={schema}
-              uischema={uischema}
-              data={data}
-              renderers={materialRenderers}
-              cells={materialCells}
-              onChange={({ data }) => setData(data)}
-            />
-        </S.ContainerForm>
+      <S.ContainerForm>
+        <JsonForms
+          schema={schema}
+          uischema={uischema}
+          data={data}
+          renderers={materialRenderers}
+          cells={materialCells}
+          onChange={({ data }) => onChange(data)}
+        />
+      </S.ContainerForm>
     </S.Container>
   );
 };

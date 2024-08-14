@@ -1,44 +1,48 @@
-import React, { useState } from 'react';
-import { JsonForms } from '@jsonforms/react';
-import { materialRenderers, materialCells } from '@jsonforms/material-renderers';
-import * as S from './styles.ts';
+import React, { useState, useEffect } from "react";
+import { JsonForms } from "@jsonforms/react";
+import {
+  materialRenderers,
+  materialCells,
+} from "@jsonforms/material-renderers";
+import * as S from "./styles.ts";
+
+interface StepOneProps {
+  data: any;
+  onChange: (data: any) => void;
+}
 
 const schema = {
-  type: 'object',
+  type: "object",
   properties: {
-    name: { type: 'string', title: 'Name' },
-    acronym: { type: 'string', title: 'Sigla' },
-    cnpj: {type: 'string', title: 'CNPJ'},
- },
-  required: ['name', 'acronym', 'cnpj']
+    nome: { type: "string", title: "Name" },
+    sigla: { type: "string", title: "Sigla" },
+    cnpj: { type: "string", title: "CNPJ" },
+  },
 };
 
 const uischema = {
-  type: 'VerticalLayout',
+  type: "VerticalLayout",
   elements: [
-    { type: 'Control', scope: '#/properties/name'},
-    { type: 'Control', scope: '#/properties/acronym' },
-    { type: 'Control', scope: '#/properties/cnpj' },
-  ]
+    { type: "Control", scope: "#/properties/nome" },
+    { type: "Control", scope: "#/properties/sigla" },
+    { type: "Control", scope: "#/properties/cnpj" },
+  ],
 };
 
-const StepOne = () => {
-  const [data, setData] = useState({});
-
+const StepOne: React.FC<StepOneProps> = ({ data, onChange }) => {
   return (
     <S.Container>
-        <S.ContainerForm>
+      <S.ContainerForm>
         <JsonForms
           schema={schema}
           uischema={uischema}
           data={data}
           renderers={materialRenderers}
           cells={materialCells}
-          onChange={({ data }) => setData(data)}
+          onChange={({ data }) => onChange(data)}
         />
-        </S.ContainerForm>
+      </S.ContainerForm>
     </S.Container>
-    
   );
 };
 

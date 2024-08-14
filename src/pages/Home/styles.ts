@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const BackButton = styled.button`
   position: absolute;
@@ -18,7 +18,6 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 2%;
-  background-color: #f4f4f4;
 `;
 
 export const Box = styled.div`
@@ -27,7 +26,7 @@ export const Box = styled.div`
   margin-top: 20px;
   background-color: white;
   border-radius: 1rem;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 10px 10px rgba(0.1, 0.1, 0.1, 0.1);
 `;
 
 export const Header = styled.div`
@@ -35,7 +34,6 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 2% 0;
-  
 `;
 
 export const TextHeader = styled.div`
@@ -46,7 +44,7 @@ export const TextHeader = styled.div`
 `;
 
 export const ButtonHeader = styled.button`
-background-color: #ffffff;
+  background-color: #ffffff;
   padding: 0.5px 1px;
   color: #006b00;
   border: 0px solid;
@@ -83,7 +81,7 @@ export const TableRow = styled.div`
   &:nth-child(even) {
     background-color: #f2f2f2;
   }
-font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
 `;
 
 export const RowItem = styled.div`
@@ -92,13 +90,34 @@ export const RowItem = styled.div`
   text-align: left;
 `;
 
-export const ActionButton = styled.button`
-  background-color: #007bff;
-  color: white;
+export const IconButton = styled.button`
   border: none;
-  padding: 5px 10px;
   margin-right: 5px;
   cursor: pointer;
-  border-radius: 5px;
-  font-family: Arial, sans-serif;
+`;
+
+export const Checkbox = styled.input.attrs({ type: "checkbox" })`
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  position: relative;
+
+  &:checked {
+    background-color: #1aff1a;
+    border-color: #1aff1a;
+  }
+
+  &:checked::before {
+    content: "✔";
+    color: white;
+    position: absolute;
+    top: 1px;
+    left: 4px;
+    font-size: 14px;
+  }
 `;
